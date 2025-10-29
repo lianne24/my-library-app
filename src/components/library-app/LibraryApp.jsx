@@ -20,6 +20,7 @@ export default function LibraryApp(){
                     <Route path='/' element={<Login/> }></Route> {/* url: / */}
                     <Route path='/login' element={<Login/> }></Route> {/* url: /login */}
                     <Route path='/welcome' element={<Welcome/> }></Route> {/* url: /welcome */}
+                    <Route path='*' element={<Error/> }></Route> {/* url: any url that does not match the previous */}
                 </Routes>
             </BrowserRouter>
         </div>
@@ -72,7 +73,8 @@ function Login(){
     }
 
     return (
-        <div className="Login">       
+        <div className="Login">
+            <h1>Enter your credentials to login</h1>       
             {showSuccessMessage && <div className="successAuthenticationMessage">Authentication Successfully!</div>}    
             {showErrorMessage && <div className="errorAuthenticationMessage">Authentication Failed!</div>}
             <div className="LoginForm">
@@ -110,7 +112,22 @@ function Login(){
 function Welcome(){
     return (
         <div className="Welcome">
-            Welcome Component
+            <h1>Welcome to Your Library</h1>
+            <div>
+                Welcome Component
+            </div>
+        </div>
+    )
+}
+
+// -------------------------
+// Error Component
+// -------------------------
+function Error(){
+    return (
+        <div className="ErrorComponent">
+            <h1>Page Not Available</h1>
+            <div>Error 404</div>
         </div>
     )
 }

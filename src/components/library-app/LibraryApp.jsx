@@ -8,7 +8,9 @@ import './LibraryApp.css'
 // - BrowserRouter: wraps the whole app and enables routing
 // - Routes & Route: define the URL paths and the components to render
 // - useNavigate: hook used to programmatically change routes
-import {BrowserRouter, Routes, Route, useNavigate, useParams} from 'react-router-dom'
+// - useParams: used to extract route parameters (e.g., username from /welcome/:username)
+// - Link: used to create internal navigation links between routes
+import {BrowserRouter, Routes, Route, useNavigate, useParams, Link} from 'react-router-dom'
 
 // The main component of the app — acts as a container for subcomponents
 export default function LibraryApp(){
@@ -19,9 +21,11 @@ export default function LibraryApp(){
                     {/* Each Route defines a URL path and which component to render */}
                     <Route path='/' element={<Login/> } /> {/* url: / */}
                     <Route path='/login' element={<Login/> } /> {/* url: /login */}
-                    <Route path='/welcome/:username' element={<Welcome/> } /> {/* url: /welcome */}
+
+                    {/* Route now passes username dynamically via a route parameter (:username) */}
+                    <Route path='/welcome/:username' element={<Welcome/> } /> {/* url: /welcome/username */}
                     <Route path='/books' element={<ListBooksComponent/> } /> {/* url: /books */}
-                    <Route path='*' element={<Error/> } /> {/* url: any url that does not match the previous */}
+                    <Route path='*' element={<Error/> } /> {/* Added catch-all route for non-existent pages */}
                 </Routes>
             </BrowserRouter>
         </div>
@@ -60,13 +64,13 @@ function Login(){
     }
 
     // Called when the Login button is clicked - It validates whether the entered username and password match
-    // predefined correct values ("lianne24" and "lia").
+    // Uses a template literal to navigate dynamically to a personalized route (/welcome/<username>) after successful login
     // Depending on the result, it toggles the visibility of success or error messages.
     function handleSubmitEvent(){
         if (username==='lianne24' && password==='lia'){
             setShowSuccessMessage(true)
             setShowErrorMessage(false)
-            navigate(`/welcome/${username}`) //Navigate to /welcome route after successful authentication
+            navigate(`/welcome/${username}`) // Route with dynamic username parameter
         } else {
             setShowSuccessMessage(false)
             setShowErrorMessage(true)
@@ -112,15 +116,18 @@ function Login(){
 // -------------------------
 function Welcome(){
 
+    // Extracts the "username" from the route (e.g., /welcome/lianne24)
     const {username} = useParams()
-
-    console.log(username)
 
     return (
         <div className="Welcome">
+
+            {/* Displays the username dynamically in the welcome message */}
             <h1>Welcome {username}</h1>
+
+            {/* Link to navigate to the Books page */}
             <div>
-                Welcome Component
+                Your <Link to="/books">Books</Link>
             </div>
         </div>
     )
@@ -129,6 +136,7 @@ function Welcome(){
 // -------------------------
 // Error Component
 // -------------------------
+// Shown for unmatched routes (404 handling)
 function Error(){
     return (
         <div className="ErrorComponent">
@@ -139,34 +147,46 @@ function Error(){
 }
 
 // -------------------------
-// List Component
+// ListBooksComponent
 // -------------------------
+// Displays a list of books with their completion status and target dates
 function ListBooksComponent(){
 
+     // Creates target dates for random book deadlines
+    const today = new Date()
+    const targetDate = new Date(today.getMonth()+2)
+
+    // Sample array of book data to display in a table for initial app version
     const books = [
-                    {id:1, name: 'The Lord of the Rings'},
-                    {id:2, name: 'To Kill a Mockingbird'},
-                    {id:3, name: 'One Hundred Years of Solitude'}
+                    {id:1, name: 'The Lord of the Rings', completed: false, targetDate: targetDate},
+                    {id:2, name: 'To Kill a Mockingbird', completed: false, targetDate: targetDate},
+                    {id:3, name: 'One Hundred Years of Solitude', completed: false, targetDate: targetDate}
                 ]
 
     return (
         <div className="ListBooksComponent">
             <h1>Your Books:</h1>
             <div>
+                {/* Renders a dynamic table from the books array */}
                 <table>
                     <thead>
                         <tr>
-                            <td>id</td>
-                            <td>name</td>
+                            <td>Id</td>
+                            <td>Name</td>
+                            <td>Is completed?</td>
+                            <td>Target Date</td>
                         </tr>
                     </thead>
                     <tbody>
                     {   
+                        // Loops through books and creates one row per book
                         books.map(
                             book => (
                                 <tr key={book.id}>
                                     <td>{book.id}</td>
                                     <td>{book.name}</td>
+                                    <td>{book.completed.toString()}</td>
+                                    <td>{book.targetDate.toDateString()}</td>
                                 </tr>
                             )
                         )

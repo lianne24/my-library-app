@@ -57,24 +57,10 @@ function Login(){
         }
     }
 
-    function SuccessMessageComponent(){
-    if(showSuccessMessage){
-        return <div className="successAuthenticationMessage">Authentication Successfully!</div>
-    }
-    return null
-    }
-
-    function ErrorMessageComponent(){
-    if(showErrorMessage){
-        return <div className="errorAuthenticationMessage">Authentication Failed!</div>
-    }
-    return null
-    }
-
     return (
-        <div className="Login">           
-            <SuccessMessageComponent />
-            <ErrorMessageComponent />
+        <div className="Login">       
+            {showSuccessMessage && <div className="successAuthenticationMessage">Authentication Successfully!</div>}    
+            {showErrorMessage && <div className="errorAuthenticationMessage">Authentication Failed!</div>}
             <div className="LoginForm">
                 <div>
                     <label>Username</label>

@@ -8,7 +8,7 @@ import './LibraryApp.css'
 // - BrowserRouter: wraps the whole app and enables routing
 // - Routes & Route: define the URL paths and the components to render
 // - useNavigate: hook used to programmatically change routes
-import {BrowserRouter, Routes, Route, useNavigate} from 'react-router-dom'
+import {BrowserRouter, Routes, Route, useNavigate, useParams} from 'react-router-dom'
 
 // The main component of the app — acts as a container for subcomponents
 export default function LibraryApp(){
@@ -19,7 +19,7 @@ export default function LibraryApp(){
                     {/* Each Route defines a URL path and which component to render */}
                     <Route path='/' element={<Login/> }></Route> {/* url: / */}
                     <Route path='/login' element={<Login/> }></Route> {/* url: /login */}
-                    <Route path='/welcome' element={<Welcome/> }></Route> {/* url: /welcome */}
+                    <Route path='/welcome/:username' element={<Welcome/> }></Route> {/* url: /welcome */}
                     <Route path='*' element={<Error/> }></Route> {/* url: any url that does not match the previous */}
                 </Routes>
             </BrowserRouter>
@@ -65,7 +65,7 @@ function Login(){
         if (username==='lianne24' && password==='lia'){
             setShowSuccessMessage(true)
             setShowErrorMessage(false)
-            navigate('/welcome') //Navigate to /welcome route after successful authentication
+            navigate(`/welcome/${username}`) //Navigate to /welcome route after successful authentication
         } else {
             setShowSuccessMessage(false)
             setShowErrorMessage(true)
@@ -110,9 +110,14 @@ function Login(){
 // Welcome Component
 // -------------------------
 function Welcome(){
+
+    const {username} = useParams()
+
+    console.log(username)
+
     return (
         <div className="Welcome">
-            <h1>Welcome to Your Library</h1>
+            <h1>Welcome {username}</h1>
             <div>
                 Welcome Component
             </div>

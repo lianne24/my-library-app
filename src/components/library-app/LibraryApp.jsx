@@ -26,8 +26,12 @@ function Login(){
     // State variables for the login form fields
     // useState() initializes state and provides setter functions
     const [username, setUsername] = useState('lianne24')
-    const [password, setPassword] = useState('mypassword')
+    const [password, setPassword] = useState('lia')
     
+    // These state variables manage whether to show success or error messages
+    const [showSuccessMessage, setShowSuccessMessage] = useState(false)
+    const [showErrorMessage, setShowErrorMessage] = useState(false)
+
     // Event handler for username input changes
     // Updates state when the user types in the username field
     function handleUsernameChange(event) {
@@ -40,8 +44,37 @@ function Login(){
         setPassword(event.target.value)
     }
 
+    // Called when the Login button is clicked - It validates whether the entered username and password match
+    // predefined correct values ("lianne24" and "lia").
+    // Depending on the result, it toggles the visibility of success or error messages.
+    function handleSubmitEvent(){
+        if (username==='lianne24' && password==='lia'){
+            setShowSuccessMessage(true)
+            setShowErrorMessage(false)
+        } else {
+            setShowSuccessMessage(false)
+            setShowErrorMessage(true)
+        }
+    }
+
+    function SuccessMessageComponent(){
+    if(showSuccessMessage){
+        return <div className="successAuthenticationMessage">Authentication Successfully!</div>
+    }
+    return null
+    }
+
+    function ErrorMessageComponent(){
+    if(showErrorMessage){
+        return <div className="errorAuthenticationMessage">Authentication Failed!</div>
+    }
+    return null
+    }
+
     return (
-        <div className="Login">
+        <div className="Login">           
+            <SuccessMessageComponent />
+            <ErrorMessageComponent />
             <div className="LoginForm">
                 <div>
                     <label>Username</label>
@@ -64,7 +97,7 @@ function Login(){
 
                 
                 <div>
-                    <button type="button" name="login">Login</button>
+                    <button type="button" name="login" onClick={handleSubmitEvent}>Login</button>
                 </div>
             </div>
         </div>

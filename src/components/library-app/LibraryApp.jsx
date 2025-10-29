@@ -17,10 +17,11 @@ export default function LibraryApp(){
             <BrowserRouter>
                 <Routes>
                     {/* Each Route defines a URL path and which component to render */}
-                    <Route path='/' element={<Login/> }></Route> {/* url: / */}
-                    <Route path='/login' element={<Login/> }></Route> {/* url: /login */}
-                    <Route path='/welcome/:username' element={<Welcome/> }></Route> {/* url: /welcome */}
-                    <Route path='*' element={<Error/> }></Route> {/* url: any url that does not match the previous */}
+                    <Route path='/' element={<Login/> } /> {/* url: / */}
+                    <Route path='/login' element={<Login/> } /> {/* url: /login */}
+                    <Route path='/welcome/:username' element={<Welcome/> } /> {/* url: /welcome */}
+                    <Route path='/books' element={<ListBooksComponent/> } /> {/* url: /books */}
+                    <Route path='*' element={<Error/> } /> {/* url: any url that does not match the previous */}
                 </Routes>
             </BrowserRouter>
         </div>
@@ -133,6 +134,46 @@ function Error(){
         <div className="ErrorComponent">
             <h1>Page Not Available</h1>
             <div>Error 404</div>
+        </div>
+    )
+}
+
+// -------------------------
+// List Component
+// -------------------------
+function ListBooksComponent(){
+
+    const books = [
+                    {id:1, name: 'The Lord of the Rings'},
+                    {id:2, name: 'To Kill a Mockingbird'},
+                    {id:3, name: 'One Hundred Years of Solitude'}
+                ]
+
+    return (
+        <div className="ListBooksComponent">
+            <h1>Your Books:</h1>
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <td>id</td>
+                            <td>name</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {   
+                        books.map(
+                            book => (
+                                <tr key={book.id}>
+                                    <td>{book.id}</td>
+                                    <td>{book.name}</td>
+                                </tr>
+                            )
+                        )
+                    }    
+                    </tbody>
+                </table>
+            </div>
         </div>
     )
 }

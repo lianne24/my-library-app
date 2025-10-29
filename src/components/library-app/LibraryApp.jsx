@@ -4,15 +4,24 @@ import { useState } from 'react'
 // Importing the CSS file for styling the components
 import './LibraryApp.css'
 
+// Importing routing dependencies from react-router-dom
+// - BrowserRouter: wraps the whole app and enables routing
+// - Routes & Route: define the URL paths and the components to render
+// - useNavigate: hook used to programmatically change routes
+import {BrowserRouter, Routes, Route, useNavigate} from 'react-router-dom'
+
 // The main component of the app — acts as a container for subcomponents
 export default function LibraryApp(){
     return (
         <div className="LibraryApp">
-            
-            {/* Render the Login component (currently active) */}
-            <Login/>
-
-            {/* <Welcome/> */}
+            <BrowserRouter>
+                <Routes>
+                    {/* Each Route defines a URL path and which component to render */}
+                    <Route path='/' element={<Login/> }></Route> {/* url: / */}
+                    <Route path='/login' element={<Login/> }></Route> {/* url: /login */}
+                    <Route path='/welcome' element={<Welcome/> }></Route> {/* url: /welcome */}
+                </Routes>
+            </BrowserRouter>
         </div>
         
     )
@@ -31,6 +40,10 @@ function Login(){
     // These state variables manage whether to show success or error messages
     const [showSuccessMessage, setShowSuccessMessage] = useState(false)
     const [showErrorMessage, setShowErrorMessage] = useState(false)
+
+    // useNavigate hook gives access to navigation control
+    // This allows redirecting the user to another page programmatically
+    const navigate = useNavigate()
 
     // Event handler for username input changes
     // Updates state when the user types in the username field
@@ -51,6 +64,7 @@ function Login(){
         if (username==='lianne24' && password==='lia'){
             setShowSuccessMessage(true)
             setShowErrorMessage(false)
+            navigate('/welcome') //Navigate to /welcome route after successful authentication
         } else {
             setShowSuccessMessage(false)
             setShowErrorMessage(true)

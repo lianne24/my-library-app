@@ -4,16 +4,37 @@ import './LibraryApp.css'
 // Importing routing dependencies from react-router-dom
 // - BrowserRouter: wraps the whole app and enables routing
 // - Routes & Route: define the URL paths and the components to render
-import {BrowserRouter, Routes, Route} from 'react-router-dom'
+// - Navigate: used to redirect users programmatically
+import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
 
-// Import components
+// Import application components
 import Login from './Login'
 import Logout from './Logout'
 import NavigationBar from './NavigationBar'
 import ListBooks from './ListBooks'
 import Error from './Error'
 import Home from './Home'
-import AuthProvider from './security/AuthContext'
+
+// Import authentication provider and hook
+import AuthProvider, { useAuth } from './security/AuthContext'
+
+// -------------------------
+// AuthenticatedRoute Component
+// -------------------------
+// This helper component protects specific routes so they can only be accessed
+// if the user is authenticated. Otherwise, it redirects to the login page.
+function AuthenticatedRoute({children}){
+
+    // Access the authentication context
+    const authContext = useAuth()
+
+    // If the user is authenticated, render the requested component (children)
+    if(authContext.isAuthenticated)
+        return children
+
+    // If not authenticated, redirect to the login page ("/")
+    return <Navigate to="/" />
+}
  
 // The main component of the app — acts as a container for subcomponents
 export default function LibraryApp(){
@@ -27,11 +48,27 @@ export default function LibraryApp(){
                         <Route path='/' element={<Login/> } /> {/* url: / */}
                         <Route path='/login' element={<Login/> } /> {/* url: /login */}
 
-                        {/* Route now passes username dynamically via a route parameter (:username) */}
-                        <Route path='/home/:username' element={<Home/> } /> {/* url: /home/username */}
-                        <Route path='/books' element={<ListBooks/> } /> {/* url: /books */}
-                        <Route path='/logout' element={<Logout/> } /> {/* url: /logout */}
-                        <Route path='*' element={<Error/> } /> {/* Added catch-all route for non-existent pages */}
+                        {/* Protected routes (require authentication) */}
+                        {/* Uses <AuthenticatedRoute> to guard access */}
+                        <Route path='/home/:username' element={
+                            <AuthenticatedRoute>
+                                <Home/> 
+                            </AuthenticatedRoute>
+                        } /> {/* url: /home/username */}
+
+                        <Route path='/books' element={
+                            <AuthenticatedRoute>
+                                <ListBooks/> 
+                            </AuthenticatedRoute>
+                        } /> {/* url: /books */}
+                        <Route path='/logout' element={
+                            <AuthenticatedRoute>
+                                <Logout/>
+                            </AuthenticatedRoute> 
+                        } /> {/* url: /logout */}
+
+                        {/* Catch-all route for invalid or undefined URLs */}
+                        <Route path='*' element={<Error/> } /> 
                     </Routes>
                 </BrowserRouter>   
             </AuthProvider>     

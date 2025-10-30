@@ -1,10 +1,15 @@
 // Importing routing dependencies from react-router-dom
 import {Link} from 'react-router-dom'
+import { useAuth } from './security/AuthContext'
+
 
 // -------------------------
 // Navigation Bar Component
 // -------------------------
 export default function NavigationBar(){
+
+    const authContext = useAuth()
+
     return (
         <header className="border-bottom border-light border-5 mb-5 p-2">
             <div className="container">

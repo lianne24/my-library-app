@@ -24,7 +24,7 @@ export default function NavigationBar(){
     // - This will cause the navigation bar to re-render,
     //   hiding authenticated-only links and showing the Login link
     function logout(){
-        authContext.setAuthenticated(false)
+        authContext.logout()
     }
 
     // -------------------------

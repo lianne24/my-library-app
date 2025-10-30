@@ -31,10 +31,34 @@ export default function AuthProvider({children}){
     const [isAuthenticated, setAuthenticated] = useState(false)
 
     // -------------------------
+    // New Function: login()
+    // -------------------------
+    // Validates credentials and updates authentication state.
+    // - If username/password match, user is marked as authenticated.
+    // - Returns true or false to indicate login success or failure.
+    function login(username, password){
+        if (username==='lianne24' && password==='lia'){
+            setAuthenticated(true) // Set isAuthenticated to true if successful authentication
+            return true
+        } else {
+            setAuthenticated(false) // Set isAuthenticated to false if unsuccessful authentication
+            return false
+        }
+    }
+
+    // -------------------------
+    // New Function: logout()
+    // -------------------------
+    // Resets authentication state to false.
+    function logout(){
+        setAuthenticated(false)
+    }
+
+    // -------------------------
     // Provide Context values to child components
     // -------------------------
     return(
-        <AuthContext.Provider value={ {isAuthenticated, setAuthenticated} }>
+        <AuthContext.Provider value={ {isAuthenticated, setAuthenticated, login, logout} }>
             {children}
         </AuthContext.Provider>
     )

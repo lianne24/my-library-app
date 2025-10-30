@@ -17,8 +17,7 @@ export default function Login(){
     const [username, setUsername] = useState('lianne24')
     const [password, setPassword] = useState('lia')
     
-    // These state variables manage whether to show success or error messages
-    const [showSuccessMessage, setShowSuccessMessage] = useState(false)
+    // These state variables manage to show error messages
     const [showErrorMessage, setShowErrorMessage] = useState(false)
 
     // useNavigate hook gives access to navigation control
@@ -44,14 +43,9 @@ export default function Login(){
     // Uses a template literal to navigate dynamically to a personalized route (/home/<username>) after successful login
     // Depending on the result, it toggles the visibility of success or error messages.
     function handleSubmitEvent(){
-        if (username==='lianne24' && password==='lia'){
-            authContext.setAuthenticated(true) // Set isAuthenticated to true if successful authentication
-            setShowSuccessMessage(true)
-            setShowErrorMessage(false)
+        if (authContext.login(username, password)){
             navigate(`/home/${username}`) // Route with dynamic username parameter
         } else {
-            authContext.setAuthenticated(false) // Set isAuthenticated to false if unsuccessful authentication
-            setShowSuccessMessage(false)
             setShowErrorMessage(true)
         }
     }
@@ -59,7 +53,6 @@ export default function Login(){
     return (
         <div className="Login">
             <h1>Enter your credentials to login</h1>       
-            {showSuccessMessage && <div className="successAuthenticationMessage">Authentication Successfully!</div>}    
             {showErrorMessage && <div className="errorAuthenticationMessage">Authentication Failed!</div>}
             <div className="LoginForm">
                 <div>
@@ -80,7 +73,6 @@ export default function Login(){
                         onChange={handlePasswordChange} // Updates password state
                     />
                 </div>
-
                 
                 <div>
                     <button type="button" name="login" onClick={handleSubmitEvent}>Login</button>

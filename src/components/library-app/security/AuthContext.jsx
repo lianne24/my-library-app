@@ -1,21 +1,40 @@
+// Import React hooks needed for creating and using Context
+// - createContext: to create a new Context object
+// - useContext: to access Context values inside components
+// - useState: to hold and update state variables within the provider
 import { createContext, useContext, useState } from "react";
 
-//Create a Context
+// -------------------------
+// Create a Context
+// -------------------------
+// This creates a global data container called AuthContext
 export const AuthContext = createContext()
 
+// -------------------------
+// Custom Hook: useAuth()
+// -------------------------
+// This hook provides a simpler and cleaner way for components to access the AuthContext
 export const useAuth = () => useContext(AuthContext)
 
-//Share the created context with other components
-
+// -------------------------
+// AuthProvider Component
+// -------------------------
+// This component wraps the entire app (or part of it) and provides
+// authentication-related data and functions to all child components.
 export default function AuthProvider({children}){
 
-    //Put some state in the context 
-    const [number, setNumber] = useState(0)
+    // -------------------------
+    // State variables stored in the Context
+    // -------------------------
 
-    setInterval( () => setNumber(number+1), 10000)
+    // Authentication state: indicates whether a user is logged in or not.
+    const [isAuthenticated, setAuthenticated] = useState(false)
 
+    // -------------------------
+    // Provide Context values to child components
+    // -------------------------
     return(
-        <AuthContext.Provider value={{number}}>
+        <AuthContext.Provider value={ {isAuthenticated, setAuthenticated} }>
             {children}
         </AuthContext.Provider>
     )

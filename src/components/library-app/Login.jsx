@@ -1,5 +1,6 @@
 // Importing React's useState hook for managing component state
 import { useState } from 'react'
+import { useAuth } from './security/AuthContext'
 
 // Importing routing dependencies from react-router-dom
 // - useNavigate: hook used to programmatically change routes
@@ -24,6 +25,9 @@ export default function Login(){
     // This allows redirecting the user to another page programmatically
     const navigate = useNavigate()
 
+    // Access the authentication context
+    const authContext = useAuth()
+
     // Event handler for username input changes
     // Updates state when the user types in the username field
     function handleUsernameChange(event) {
@@ -41,10 +45,12 @@ export default function Login(){
     // Depending on the result, it toggles the visibility of success or error messages.
     function handleSubmitEvent(){
         if (username==='lianne24' && password==='lia'){
+            authContext.setAuthenticated(true) // Set isAuthenticated to true if successful authentication
             setShowSuccessMessage(true)
             setShowErrorMessage(false)
             navigate(`/home/${username}`) // Route with dynamic username parameter
         } else {
+            authContext.setAuthenticated(false) // Set isAuthenticated to false if unsuccessful authentication
             setShowSuccessMessage(false)
             setShowErrorMessage(true)
         }

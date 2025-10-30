@@ -16,8 +16,8 @@ import {BrowserRouter, Routes, Route, useNavigate, useParams, Link} from 'react-
 export default function LibraryApp(){
     return (
         <div className="LibraryApp">
-            <Header />
             <BrowserRouter>
+            <Header />
                 <Routes>
                     {/* Each Route defines a URL path and which component to render */}
                     <Route path='/' element={<Login/> } /> {/* url: / */}
@@ -29,8 +29,8 @@ export default function LibraryApp(){
                     <Route path='/logout' element={<Logout/> } /> {/* url: /logout */}
                     <Route path='*' element={<Error/> } /> {/* Added catch-all route for non-existent pages */}
                 </Routes>
-            </BrowserRouter>
             <Footer />
+            </BrowserRouter>        
         </div>
         
     )
@@ -206,9 +206,25 @@ function ListBooksComponent(){
 // -------------------------
 function Header(){
     return (
-        <div className="Header">
-            Header <hr/>
-        </div>
+        <header className="border-bottom border-light border-5 mb-5 p-2">
+            <div className="container">
+                <div className="row">
+                    <nav className="navbar navbar-expand-lg">
+                        <div className="navbar-brand ms-2 fs-2 fw-bold text-black">MyLibrary</div>
+                        <div className="collapse navbar-collapse">
+                            <ul className="navbar-nav">
+                                <li className="nav-item fs-5"><Link className="nav-link" to="/welcome/lianne24">Home</Link></li>
+                                <li className="nav-item fs-5"><Link className="nav-link" to="/books">Books</Link></li>
+                            </ul>
+                        </div>
+                        <ul className="navbar-nav">
+                            <li className="nav-item fs-5"><Link className="nav-link" to="/logout">Logout</Link></li>
+                            <li className="nav-item fs-5"><Link className="nav-link" to="/">Login</Link></li>
+                        </ul>                       
+                    </nav>
+                </div>
+            </div>
+        </header>
     )
 }
 
@@ -217,9 +233,11 @@ function Header(){
 // -------------------------
 function Footer(){
     return (
-        <div className="Footer">
-            <hr/>Footer 
-        </div>
+        <footer className="footer">
+            <div className="container">
+                Footer 
+            </div>
+        </footer>
     )
 }
 

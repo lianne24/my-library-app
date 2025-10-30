@@ -16,6 +16,7 @@ import {BrowserRouter, Routes, Route, useNavigate, useParams, Link} from 'react-
 export default function LibraryApp(){
     return (
         <div className="LibraryApp">
+            <Header />
             <BrowserRouter>
                 <Routes>
                     {/* Each Route defines a URL path and which component to render */}
@@ -25,9 +26,11 @@ export default function LibraryApp(){
                     {/* Route now passes username dynamically via a route parameter (:username) */}
                     <Route path='/welcome/:username' element={<Welcome/> } /> {/* url: /welcome/username */}
                     <Route path='/books' element={<ListBooksComponent/> } /> {/* url: /books */}
+                    <Route path='/logout' element={<Logout/> } /> {/* url: /logout */}
                     <Route path='*' element={<Error/> } /> {/* Added catch-all route for non-existent pages */}
                 </Routes>
             </BrowserRouter>
+            <Footer />
         </div>
         
     )
@@ -164,11 +167,11 @@ function ListBooksComponent(){
                 ]
 
     return (
-        <div className="ListBooksComponent">
+        <div className="container">
             <h1>Your Books:</h1>
             <div>
                 {/* Renders a dynamic table from the books array */}
-                <table>
+                <table className="table">
                     <thead>
                         <tr>
                             <td>Id</td>
@@ -194,6 +197,40 @@ function ListBooksComponent(){
                     </tbody>
                 </table>
             </div>
+        </div>
+    )
+}
+
+// -------------------------
+// Header Component
+// -------------------------
+function Header(){
+    return (
+        <div className="Header">
+            Header <hr/>
+        </div>
+    )
+}
+
+// -------------------------
+// Footer Component
+// -------------------------
+function Footer(){
+    return (
+        <div className="Footer">
+            <hr/>Footer 
+        </div>
+    )
+}
+
+// -------------------------
+// Logout Component
+// -------------------------
+function Logout(){
+    return (
+        <div className="Logout">
+            <h1>You are logged out!</h1>
+            <div>Thank you for using our app</div>
         </div>
     )
 }

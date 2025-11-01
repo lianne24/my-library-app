@@ -13,3 +13,7 @@ export const retrieveAllBooksForUsernameApi
 // Delete a Specific Book for a User with a DELETE request sent to backend endpoint
 export const deleteBookApi 
     = (username, id) => axios.delete(`${API_BASE_URL}/users/${username}/books/${id}`)
+
+
+export const retrieveBookApi 
+    = (username, id) => axios.get(`${API_BASE_URL}/users/${username}/books/${id}`)

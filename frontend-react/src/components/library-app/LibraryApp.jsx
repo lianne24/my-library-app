@@ -11,6 +11,7 @@ import NavigationBar from './NavigationBar'
 import ListBooks from './ListBooks'
 import Error from './Error'
 import Home from './Home'
+import Book from './Book'
 
 // Import authentication provider and hook
 import AuthProvider, { useAuth } from './security/AuthContext'
@@ -54,6 +55,13 @@ export default function LibraryApp(){
                                 <ListBooks/> 
                             </AuthenticatedRoute>
                         } /> {/* url: /books */}
+
+                        <Route path='/book/:id' element={
+                            <AuthenticatedRoute>
+                                <Book/> 
+                            </AuthenticatedRoute>
+                        } /> {/* url: /book/id */}
+
                         <Route path='/logout' element={
                             <AuthenticatedRoute>
                                 <Logout/>

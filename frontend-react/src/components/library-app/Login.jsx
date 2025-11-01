@@ -16,7 +16,7 @@ export default function Login(){
     // These state variables manage to show error messages
     const [showErrorMessage, setShowErrorMessage] = useState(false)
 
-    // This allows redirecting the user to another page programmatically
+    // This allows redirecting the user to another page 
     const navigate = useNavigate()
 
     // Access the authentication context

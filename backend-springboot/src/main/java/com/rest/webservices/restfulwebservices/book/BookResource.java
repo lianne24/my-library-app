@@ -6,13 +6,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-//-------------------------
-//BookResource (REST Controller)
-//-------------------------
-//This class defines REST API endpoints for interacting with Book data.
-//It serves as the entry point for HTTP requests from the frontend (React app).
+//BookResource (REST Controller) - defines REST API end points for interacting with Book data.
 
 @RestController // Marks this class as a RESTful controller (returns JSON instead of HTML)
 public class BookResource {
@@ -44,6 +43,24 @@ public class BookResource {
 		
 		// ResponseEntity.noContent() builds an HTTP 204 response (no body)
 		return ResponseEntity.noContent().build();
+	}
+	
+	//Update information for book with specific id for a given user
+	@PutMapping("/users/{username}/books/{id}")
+	public Book updateBook(@PathVariable String username, @PathVariable int id, @RequestBody Book book){
+		bookService.updateBook(book);
+		
+		// ResponseEntity.noContent() builds an HTTP 204 response (no body)
+		return book;
+	}
+	
+	//Update information for book with specific id for a given user
+	@PostMapping("/users/{username}/books")
+	public Book createBook(@PathVariable String username, @RequestBody Book book){
+		Book newBook = bookService.addBook(username, book.getDescription(), book.getTargetDate(), book.isDone());
+		
+		// ResponseEntity.noContent() builds an HTTP 204 response (no body)
+		return newBook;
 	}
 
 }

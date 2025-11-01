@@ -15,9 +15,7 @@ import Home from './Home'
 // Import authentication provider and hook
 import AuthProvider, { useAuth } from './security/AuthContext'
 
-// -------------------------
 // AuthenticatedRoute Component - protects specific routes so they can only be accessed if the user is authenticated
-// -------------------------
 function AuthenticatedRoute({children}){
 
     // Access the authentication context

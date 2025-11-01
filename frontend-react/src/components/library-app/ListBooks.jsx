@@ -6,11 +6,16 @@ import { useEffect, useState } from "react"
 
 // Import API functions for retrieving and deleting books
 import { retrieveAllBooksForUsernameApi, deleteBookApi } from "./api/BookApiService"
+import { useAuth } from "./security/AuthContext"
 
-// -------------------------
 // Main Component: ListBooks
-// -------------------------
 export default function ListBooks(){
+
+    // Access the authentication context to get current user information
+    const authContext = useAuth()
+
+    // Extract the username of the currently authenticated user
+    const username = authContext.username
 
     // React State Hooks
     const [books, setBooks] = useState([]) // books: array holding all books retrieved from the backend API
@@ -20,10 +25,10 @@ export default function ListBooks(){
     // useEffect Hook - calls updateBooks() to fetch the initial list of books from the backend, executes only once after the component mounts
     useEffect ( () => updateBooks(), [])
 
-    // Fetches all books for the hardcoded user 'lianne24' from the backend.
+    // Fetches all books for the username from the backend.
     function updateBooks(){
         
-        retrieveAllBooksForUsernameApi('lianne24')
+        retrieveAllBooksForUsernameApi(username)
             .then(response => {
                 setBooks(response.data) // Save the fetched books in component state
             }
@@ -34,7 +39,7 @@ export default function ListBooks(){
 
     // Deletes a specific book by ID for the same user.
     function deleteBook(id){
-        deleteBookApi('lianne24', id)
+        deleteBookApi(username, id)
         .then(
             
             () => {
@@ -45,9 +50,7 @@ export default function ListBooks(){
         .catch(error => console.log(error))
     }
 
-    // -------------------------
     // JSX (UI Rendering)
-    // -------------------------
     return (
         <div className="container">
             <h1>Your Books</h1>

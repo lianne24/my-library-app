@@ -6,9 +6,7 @@ import { useAuth } from './security/AuthContext'
 import {useNavigate} from 'react-router-dom'
 
 
-// -------------------------
 // Login Component
-// -------------------------
 export default function Login(){
 
     // State variables for the login form fields

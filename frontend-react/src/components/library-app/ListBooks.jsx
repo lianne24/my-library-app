@@ -1,8 +1,6 @@
 // -------------------------
-// List Books 
+// List Books - retrieves and displays a list of books for a user.
 // -------------------------
-// This component retrieves and displays a list of books for a user.
-// It also allows deleting books and automatically refreshes the table after deletion.
 
 import { useEffect, useState } from "react"
 
@@ -14,25 +12,15 @@ import { retrieveAllBooksForUsernameApi, deleteBookApi } from "./api/BookApiServ
 // -------------------------
 export default function ListBooks(){
 
-    // -------------------------
     // React State Hooks
-    // -------------------------
     const [books, setBooks] = useState([]) // books: array holding all books retrieved from the backend API
 
     const [message, setMessage] = useState(null) // message: string used to show feedback (like successful deletion)
-
-    // -------------------------
-    // useEffect Hook
-    // -------------------------
-    // Calls updateBooks() to fetch the initial list of books from the backend, executes only once after the component mounts
+    
+    // useEffect Hook - calls updateBooks() to fetch the initial list of books from the backend, executes only once after the component mounts
     useEffect ( () => updateBooks(), [])
 
-    // -------------------------
-    // Function: updateBooks
-    // -------------------------
     // Fetches all books for the hardcoded user 'lianne24' from the backend.
-    // If successful → stores the list of books in state.
-    // If there's an error → logs it to the console.
     function updateBooks(){
         
         retrieveAllBooksForUsernameApi('lianne24')
@@ -44,11 +32,7 @@ export default function ListBooks(){
 
     }
 
-    // -------------------------
-    // Function: deleteBook
-    // -------------------------
     // Deletes a specific book by ID for the same user.
-    // After deletion → shows a message and refreshes the book list.
     function deleteBook(id){
         deleteBookApi('lianne24', id)
         .then(

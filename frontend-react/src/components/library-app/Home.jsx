@@ -2,9 +2,7 @@
 import {useParams, Link} from 'react-router-dom'
 import axios from 'axios'
 
-// -------------------------
 // Home Component
-// -------------------------
 export default function Home(){
 
     // Extracts the "username" from the route (e.g., /home/lianne24)

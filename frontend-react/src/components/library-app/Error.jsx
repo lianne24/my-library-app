@@ -1,6 +1,4 @@
-// -------------------------
-// Error Component
-// -------------------------
+
 // Shown for unmatched routes (404 handling)
 export default function Error(){
     return (

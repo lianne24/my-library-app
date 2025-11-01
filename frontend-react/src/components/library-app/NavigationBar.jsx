@@ -2,15 +2,12 @@
 import {Link} from 'react-router-dom'
 
 // Importing the custom authentication context hook
-// - useAuth provides access to global authentication state and functions
 import { useAuth } from './security/AuthContext'
 
 
 // -------------------------
-// Navigation Bar Component
+// Navigation Bar Component - renders the top navigation bar
 // -------------------------
-// This component renders the top navigation bar.
-// It conditionally displays links based on whether the user is logged in.
 export default function NavigationBar(){
 
     // Access the authentication context
@@ -21,7 +18,6 @@ export default function NavigationBar(){
 
     // Function called when the user clicks "Logout"
     // - Updates authentication state to false
-    // - This will cause the navigation bar to re-render,
     //   hiding authenticated-only links and showing the Login link
     function logout(){
         authContext.logout()

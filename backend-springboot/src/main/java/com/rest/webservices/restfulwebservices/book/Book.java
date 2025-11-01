@@ -3,29 +3,40 @@ package com.rest.webservices.restfulwebservices.book;
 
 import java.time.LocalDate;
 
+
+//-------------------------
+//Book Entity
+//-------------------------
+//This class represents the "Book" data model used in the application.
+//Each Book object holds information about a user's book, including its description, completion status, and target date.
 public class Book {
 
+	// -------------------------
+	// Fields (Attributes)
+	// -------------------------
 	private int id;
 	private String username;
+	private String description;
 	private LocalDate targetDate;
 	private boolean done;
 	
-	//Constructor with fields
-	public Book(int id, String username, LocalDate targetDate, boolean done) {
+	//Constructor (Parameterized)
+	public Book(int id, String username, String description, LocalDate targetDate, boolean done) {
 		super();
 		this.id = id;
 		this.username = username;
+		this.description = description;
 		this.targetDate = targetDate;
 		this.done = done;
 	}
 	
-	//Default constructor
+	//Default Constructor
 	public Book() {
 		
 	}
 	
 
-	//Getters and setters for all fields
+	//Getters and Setters
 	public int getId() {
 		return id;
 	}
@@ -57,11 +68,19 @@ public class Book {
 	public void setDone(boolean done) {
 		this.done = done;
 	}
+	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 	@Override
 	public String toString() {
-		return "Book [id=" + id + ", username=" + username + ", targetDate=" + targetDate + ", done=" + done + "]";
+		return "Book [id=" + id + ", username=" + username + ", description=" + description + ", targetDate="
+				+ targetDate + ", done=" + done + "]";
 	}
-	
 	
 }

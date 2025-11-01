@@ -2,9 +2,6 @@
 import './LibraryApp.css'
 
 // Importing routing dependencies from react-router-dom
-// - BrowserRouter: wraps the whole app and enables routing
-// - Routes & Route: define the URL paths and the components to render
-// - Navigate: used to redirect users programmatically
 import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
 
 // Import application components
@@ -19,10 +16,8 @@ import Home from './Home'
 import AuthProvider, { useAuth } from './security/AuthContext'
 
 // -------------------------
-// AuthenticatedRoute Component
+// AuthenticatedRoute Component - protects specific routes so they can only be accessed if the user is authenticated
 // -------------------------
-// This helper component protects specific routes so they can only be accessed
-// if the user is authenticated. Otherwise, it redirects to the login page.
 function AuthenticatedRoute({children}){
 
     // Access the authentication context

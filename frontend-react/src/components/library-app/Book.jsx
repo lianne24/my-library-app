@@ -44,13 +44,16 @@ export default function Book(){
 
     // Call the backend REST API to get book details for the given username and ID
     function retrieveBook(){
-        retrieveBookApi(username, id)
-            .then(response => {
-                setDescription(response.data.description) // Updates local state variable description
-                settargetDate(response.data.targetDate) // Updates local state variable targetDate
-                setDone(response.data.done)
-            })
-            .catch(error => console.log(error))
+
+        if(id!=-1){
+            retrieveBookApi(username, id)
+                .then(response => {
+                    setDescription(response.data.description) // Updates local state variable description
+                    settargetDate(response.data.targetDate) // Updates local state variable targetDate
+                    setDone(response.data.done)
+                })
+                .catch(error => console.log(error))
+        }
     }
 
     // Build a "book" object from the form values and sends it to the backend
@@ -78,15 +81,16 @@ export default function Book(){
         let errors = {}
 
         // Validate description: must be at least 3 characters
-        if(values.description.length<3)
+        if(!values.description || values.description.length < 3)
             errors.description = 'Enter at least 3 characters'
 
         // Validate target date: ensure it's not empty or invalid
-        if(values.targetDate==null)
+        if (!values.targetDate) {
             errors.targetDate = 'Enter a valid target date'
+        } 
 
         // Validate completion status: ensure it's true or false
-        if(values.done==null)
+        if(values.done !== 'true' && values.done !== 'false')
             errors.done = 'Done must be either "true" or "false"'
 
         return errors
@@ -107,9 +111,15 @@ export default function Book(){
                 {
                     (props) => (
                         <Form>
-                            {/* Displays validation error for description */}
+                            {/* Displays validation error for description and target date*/}
                             <ErrorMessage 
                                 name="description"
+                                component="div"
+                                className="alert alert-warning"
+                            />
+
+                            <ErrorMessage 
+                                name="targetDate"
                                 component="div"
                                 className="alert alert-warning"
                             />

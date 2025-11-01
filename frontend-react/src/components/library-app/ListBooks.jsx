@@ -58,6 +58,10 @@ export default function ListBooks(){
         navigate(`/book/${id}`) // Route with dynamic id parameter
     }
 
+    function addBook(){
+        navigate(`/book/-1`) // Route with hardcoded default book id
+    }
+
     // JSX (UI Rendering)
     return (
         <div className="container">
@@ -95,6 +99,7 @@ export default function ListBooks(){
                     </tbody>
                 </table>
             </div>
+            <div className="btn btn-success m-3" onClick={addBook}>Add Book</div>
         </div>
     )
 }

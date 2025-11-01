@@ -1,8 +1,8 @@
 // Importing routing dependencies from react-router-dom
-import {useParams} from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
 
 // Import API function for retrieving a single book by username and ID
-import { retrieveBookApi } from './api/BookApiService'
+import { retrieveBookApi, updateBookApi } from './api/BookApiService'
 
 // Import authentication context to access the logged-in user's username
 import { useAuth } from './security/AuthContext'
@@ -25,33 +25,55 @@ export default function Book(){
     // Extract the username of the authenticated user
     const [targetDate, settargetDate] = useState('')
 
+    // Extract the username of the authenticated user
+    const [done, setDone] = useState(false)
+
     // Access the authentication context to get current user information
     const authContext = useAuth()
 
     // Extract the username of the currently authenticated user
     const username = authContext.username
 
-    // Runs when the component mounts or when the "id" changes
+    // This allows redirecting the user to another page
+    const navigate = useNavigate()
+
+    // Run when the component mounts or when the "id" changes
     useEffect(
         () => retrieveBook, [id]
     )
 
-    // Calls the backend REST API to get book details for the given username and ID
+    // Call the backend REST API to get book details for the given username and ID
     function retrieveBook(){
         retrieveBookApi(username, id)
             .then(response => {
                 setDescription(response.data.description) // Updates local state variable description
                 settargetDate(response.data.targetDate) // Updates local state variable targetDate
+                setDone(response.data.done)
             })
             .catch(error => console.log(error))
     }
 
-    // This will later call an API endpoint to save changes.
+    // Build a "book" object from the form values and sends it to the backend
     function onSubmit(values){
 
+        // Build the updated book object the way the backend expects it
+        const book = {
+            id: id,
+            username: username,
+            description: values.description,
+            targetDate: values.targetDate, 
+            done: values.done
+        }
+
+        // Send PUT request to update the book on the backend
+        updateBookApi(username, id, book)
+            .then(response => {
+                navigate('/books') // After saving, go back to the main books list
+            })
+            .catch(error => console.log(error))       
     }
 
-    // Performs form validation to ensure all required fields have valid data
+    // Perform form validation to ensure all required fields have valid data
     function validate(values){
         let errors = {}
 
@@ -60,18 +82,22 @@ export default function Book(){
             errors.description = 'Enter at least 3 characters'
 
         // Validate target date: ensure it's not empty or invalid
-        if(values.targetDate.length==null)
+        if(values.targetDate==null)
             errors.targetDate = 'Enter a valid target date'
+
+        // Validate completion status: ensure it's true or false
+        if(values.done==null)
+            errors.done = 'Done must be either "true" or "false"'
 
         return errors
     }
 
-    // JSX (UI Rendering) - Renders a form to edit the book details
+    // JSX (UI Rendering) - Render a form to edit the book details
     return(
         <div className="container">
             <h1>Enter Book Details</h1>
             <div>
-                <Formik initialValues={{description, targetDate}} // Initial values are populated from the component state
+                <Formik initialValues={{description, targetDate, done:done.toString()}} // Initial values are populated from the component state
                     enableReinitialize={true} // Reinitializes the form when the state updates     
                     onSubmit={onSubmit} // Form submission handler
                     validate={validate} // Validation logic
@@ -98,6 +124,15 @@ export default function Book(){
                              <fieldset className="form-group">
                                 <label>Target Date</label>
                                 <Field type="date" className="form-control" name="targetDate"/>
+                            </fieldset>
+
+                            {/* Input field for completion status */}
+                             <fieldset className="form-group">
+                                <label>Done</label>
+                                <Field as="select" className="form-control" name="done"> 
+                                    <option value="true">true</option>
+                                    <option value="false">false</option>
+                                </Field>
                             </fieldset>
 
                             {/* Submit button for saving book details */}

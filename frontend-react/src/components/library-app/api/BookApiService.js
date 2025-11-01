@@ -14,6 +14,10 @@ export const retrieveAllBooksForUsernameApi
 export const deleteBookApi 
     = (username, id) => axios.delete(`${API_BASE_URL}/users/${username}/books/${id}`)
 
-
+// Retrieve detailed information for a single book (used for editing)
 export const retrieveBookApi 
     = (username, id) => axios.get(`${API_BASE_URL}/users/${username}/books/${id}`)
+
+// Update an existing book with new information provided in the request body
+export const updateBookApi 
+    = (username, id, book) => axios.put(`${API_BASE_URL}/users/${username}/books/${id}`, book)

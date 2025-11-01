@@ -54,12 +54,11 @@ public class BookResource {
 		return book;
 	}
 	
-	//Update information for book with specific id for a given user
+	//Added new book with details for a given user
 	@PostMapping("/users/{username}/books")
 	public Book createBook(@PathVariable String username, @RequestBody Book book){
 		Book newBook = bookService.addBook(username, book.getDescription(), book.getTargetDate(), book.isDone());
 		
-		// ResponseEntity.noContent() builds an HTTP 204 response (no body)
 		return newBook;
 	}
 

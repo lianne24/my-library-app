@@ -49,8 +49,6 @@ public class BookResource {
 	@PutMapping("/users/{username}/books/{id}")
 	public Book updateBook(@PathVariable String username, @PathVariable int id, @RequestBody Book book){
 		bookService.updateBook(book);
-		
-		// ResponseEntity.noContent() builds an HTTP 204 response (no body)
 		return book;
 	}
 	
@@ -58,7 +56,6 @@ public class BookResource {
 	@PostMapping("/users/{username}/books")
 	public Book createBook(@PathVariable String username, @RequestBody Book book){
 		Book newBook = bookService.addBook(username, book.getDescription(), book.getTargetDate(), book.isDone());
-		
 		return newBook;
 	}
 

@@ -42,7 +42,9 @@ public class BookService {
 	// Adds a new book to the list with the given details and auto-increments the ID.
 	public Book addBook(String username, String description, LocalDate targetDate, boolean done) {
 		Book book = new Book(++booksCount,username,description,targetDate,done);
+		books.add(book);
 		return book;
+
 	}
 	
 	// Deletes a book from the list by its ID.

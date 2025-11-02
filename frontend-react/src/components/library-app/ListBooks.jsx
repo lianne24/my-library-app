@@ -59,7 +59,7 @@ export default function ListBooks(){
     }
 
     function addBook(){
-        navigate(`/book/-1`) // Route with hardcoded default book id
+        navigate('/book/-1') // Route with hardcoded default book id
     }
 
     // JSX (UI Rendering)

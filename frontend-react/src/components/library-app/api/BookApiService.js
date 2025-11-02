@@ -21,3 +21,7 @@ export const retrieveBookApi
 // Update an existing book with new information provided in the request body
 export const updateBookApi 
     = (username, id, book) => axios.put(`${API_BASE_URL}/users/${username}/books/${id}`, book)
+
+// Create a new book with information provided in the request body
+export const createBookApi 
+    = (username, book) => axios.post(`${API_BASE_URL}/users/${username}/books`, book)

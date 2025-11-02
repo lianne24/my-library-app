@@ -2,7 +2,7 @@
 import {useNavigate, useParams} from 'react-router-dom'
 
 // Import API function for retrieving a single book by username and ID
-import { retrieveBookApi, updateBookApi } from './api/BookApiService'
+import { createBookApi, retrieveBookApi, updateBookApi } from './api/BookApiService'
 
 // Import authentication context to access the logged-in user's username
 import { useAuth } from './security/AuthContext'
@@ -68,12 +68,23 @@ export default function Book(){
             done: values.done
         }
 
-        // Send PUT request to update the book on the backend
-        updateBookApi(username, id, book)
-            .then(response => {
-                navigate('/books') // After saving, go back to the main books list
-            })
-            .catch(error => console.log(error))       
+        if(id==-1){
+            // Send PUT request to update the book on the backend
+            createBookApi(username, book)
+                .then(response => {
+                    navigate('/books') // After saving, go back to the main books list
+                })
+                .catch(error => console.log(error))    
+        
+        } else {
+            
+            // Send PUT request to update the book on the backend
+            updateBookApi(username, id, book)
+                .then(response => {
+                    navigate('/books') // After saving, go back to the main books list
+                })
+                .catch(error => console.log(error))    
+        }   
     }
 
     // Perform form validation to ensure all required fields have valid data

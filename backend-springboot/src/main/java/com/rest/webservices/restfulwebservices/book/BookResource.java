@@ -24,6 +24,12 @@ public class BookResource {
 		this.bookService = bookService;
 	}
 	
+	// Basic authentication URL
+	@GetMapping("/basicauth")
+	public String basicAuthentication(){
+		return "Success";
+	}
+	
 	// Retrieves all books for a given username.
 	@GetMapping("/users/{username}/books")
 	public List<Book> retrieveBooks(@PathVariable String username){

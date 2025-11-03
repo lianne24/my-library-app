@@ -8,7 +8,19 @@ const API_BASE_URL = 'http://localhost:8080'
 
 // Retrieve All Books for a User with a GET request to backend endpoint
 export const retrieveAllBooksForUsernameApi 
-    = (username) => axios.get(`${API_BASE_URL}/users/${username}/books`)
+    = (username) => axios.get(`${API_BASE_URL}/users/${username}/books`, {
+        headers: {
+            Authorization: 'Basic bGlhbm5lMjQ6bGlh'
+        }
+    })
+
+// Send a GET request to a test endpoint (/basicauth) to verify credentials
+export const basicAuthenticationService 
+    = (token) => axios.get(`${API_BASE_URL}/basicauth`, {
+        headers: {
+            Authorization: token
+        }
+    })
 
 // Delete a Specific Book for a User with a DELETE request sent to backend endpoint
 export const deleteBookApi 

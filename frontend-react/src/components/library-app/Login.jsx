@@ -33,8 +33,8 @@ export default function Login(){
     }
 
     // Called when the Login button is clicked - It validates whether the entered username and password match
-    function handleSubmitEvent(){
-        if (authContext.login(username, password)){
+    async function handleSubmitEvent(){
+        if (await authContext.login(username, password)){
             navigate(`/home/${username}`) // Route with dynamic username parameter
         } else {
             setShowErrorMessage(true)

@@ -1,6 +1,7 @@
 // Import React hooks needed for creating and using Context
 import { createContext, useContext, useState } from "react";
 import { basicAuthenticationService } from "../api/BookApiService";
+import { setupAxiosInterceptors } from "../api/BookApiService";
 
 // Create a Context
 export const AuthContext = createContext()
@@ -35,6 +36,7 @@ export default function AuthProvider({children}){
                 setAuthenticated(true) // Set isAuthenticated to true if successful authentication
                 setUsername(username) // Store username for later use
                 setToken(basicToken) // Save generated token for later use
+                setupAxiosInterceptors(basicToken) //Attach token to every future API call
                 return true
             } else {
                 logout() // Reset authentication on unexpected status

@@ -19,12 +19,6 @@ export const setupAxiosInterceptors = (token) => {
         }
     )}
 
-// Send a GET request to a test endpoint (/basicauth) to verify credentials
-export const basicAuthenticationService = (token) =>
-    apiClient.get(`${API_BASE_URL}/basicauth`, {
-        headers: { Authorization: token }
-    })
-
 // Retrieve All Books for a User with a GET request to backend endpoint
 export const retrieveAllBooksForUsernameApi 
     = (username) => apiClient.get(`${API_BASE_URL}/users/${username}/books`)

@@ -1,6 +1,6 @@
 // Import React hooks needed for creating and using Context
 import { createContext, useContext, useState } from "react";
-import { basicAuthenticationService } from "../api/BookApiService";
+import { jwtAuthenticationService } from "../api/AuthenticationApiService";
 import { setupAxiosInterceptors } from "../api/BookApiService";
 
 // Create a Context
@@ -18,25 +18,27 @@ export default function AuthProvider({children}){
     // Store the current logged-in user's username
     const [username, setUsername] = useState(null)
 
-    // Store the Basic Authentication token (Base64 encoded credentials)
+    // Store the current JWT token ("Bearer <token>")
     const[token, setToken] = useState(null)
 
-    // Validates credentials by sending a Basic Auth request to backend (/basicauth)
+    // Handle authentication using the backend JWT endpoint
     async function login(username, password){
 
-        // Generate a Basic Authentication header value using "Basic <base64(username:password)>"
-        const basicToken = 'Basic ' + window.btoa(username + ":" + password)
-
         try {
-            // Call the backend authentication endpoint
-            const response = await basicAuthenticationService(basicToken)
+            // Send login request (username, password) to the backend JWT authentication endpoint to `/authenticate`
+            const response = await jwtAuthenticationService(username, password)
                                 
             // If server returns HTTP 200, login is successful
             if (response.status==200){
+
+                // Construct the Bearer token format expected by Spring Security
+                const jwtToken = 'Bearer ' + response.data.token
+
+                // Update authentication state and store user details
                 setAuthenticated(true) // Set isAuthenticated to true if successful authentication
                 setUsername(username) // Store username for later use
-                setToken(basicToken) // Save generated token for later use
-                setupAxiosInterceptors(basicToken) //Attach token to every future API call
+                setToken(jwtToken) // Save generated token for later use
+                setupAxiosInterceptors(jwtToken) //Attach token to every future API call
                 return true
             } else {
                 logout() // Reset authentication on unexpected status

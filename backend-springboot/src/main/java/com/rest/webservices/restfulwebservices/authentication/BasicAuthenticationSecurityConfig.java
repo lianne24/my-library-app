@@ -17,8 +17,8 @@ import org.springframework.security.web.SecurityFilterChain;
 
 //AuthenticationSecurityConfig - defines a basic Spring Security configuration for the REST API
 
-@Configuration
-public class AuthenticationSecurityConfig {
+//@Configuration
+public class BasicAuthenticationSecurityConfig {
 
 	// SecurityFilterChain Bean - configures how HTTP requests are secured and authenticated
 	

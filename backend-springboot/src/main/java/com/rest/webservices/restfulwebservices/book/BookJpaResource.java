@@ -11,17 +11,22 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-//BookResource (REST Controller) - defines REST API end points for interacting with Book data.
+import com.rest.webservices.restfulwebservices.book.repository.BookRepository;
 
-//@RestController // Marks this class as a RESTful controller (returns JSON instead of HTML)
-public class BookResource {
+//BookJpaResource (REST Controller) - defines REST API end points for interacting with Book data.
+
+@RestController // Marks this class as a RESTful controller (returns JSON instead of HTML)
+public class BookJpaResource {
 	
 	// The BookService is automatically injected by Spring Boot.
 	private BookService bookService;
 	
+	private BookRepository bookRepository;
+	
 	// Constructor-based dependency injection
-	public BookResource(BookService bookService) {
+	public BookJpaResource(BookService bookService, BookRepository bookRepository) {
 		this.bookService = bookService;
+		this.bookRepository = bookRepository;
 	}
 	
 	// Basic authentication URL
@@ -33,19 +38,19 @@ public class BookResource {
 	// Retrieves all books for a given username.
 	@GetMapping("/users/{username}/books")
 	public List<Book> retrieveBooks(@PathVariable String username){
-		return bookService.findByUsername(username);
+		return bookRepository.findByUsername(username);
 	}
 	
 	// Retrieves a single book by its ID.
 	@GetMapping("/users/{username}/books/{id}")
 	public Book retrieveBook (@PathVariable String username, @PathVariable int id) {
-		return bookService.findById(id);
+		return bookRepository.findById(id).get();
 	}
 	
 	// Deletes a specific book by ID for a given user.
 	@DeleteMapping("/users/{username}/books/{id}")
 	public ResponseEntity<Void> deleteBook(@PathVariable String username, @PathVariable int id){
-		bookService.deleteById(id);
+		bookRepository.deleteById(id);
 		
 		// ResponseEntity.noContent() builds an HTTP 204 response (no body)
 		return ResponseEntity.noContent().build();
@@ -54,15 +59,18 @@ public class BookResource {
 	//Update information for book with specific id for a given user
 	@PutMapping("/users/{username}/books/{id}")
 	public Book updateBook(@PathVariable String username, @PathVariable int id, @RequestBody Book book){
-		bookService.updateBook(book);
+		bookRepository.save(book);
 		return book;
 	}
 	
 	//Added new book with details for a given user
 	@PostMapping("/users/{username}/books")
 	public Book createBook(@PathVariable String username, @RequestBody Book book){
-		Book newBook = bookService.addBook(username, book.getDescription(), book.getTargetDate(), book.isDone());
-		return newBook;
+		
+		book.setUsername(username);
+		book.setId(null);
+		
+		return bookRepository.save(book);
 	}
 
 }

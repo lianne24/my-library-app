@@ -3,25 +3,35 @@ package com.rest.webservices.restfulwebservices.book;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+
 
 //-------------------------
 //Book Entity
 //-------------------------
 //This class represents the "Book" data model used in the application.
 //Each Book object holds information about a user's book, including its description, completion status, and target date.
+
+@Entity
 public class Book {
 
 	// -------------------------
 	// Fields (Attributes)
 	// -------------------------
-	private int id;
+	
+	@Id
+	@GeneratedValue
+	private Integer id;
+	
 	private String username;
 	private String description;
 	private LocalDate targetDate;
 	private boolean done;
 	
 	//Constructor (Parameterized)
-	public Book(int id, String username, String description, LocalDate targetDate, boolean done) {
+	public Book(Integer id, String username, String description, LocalDate targetDate, boolean done) {
 		super();
 		this.id = id;
 		this.username = username;
@@ -37,11 +47,11 @@ public class Book {
 	
 
 	//Getters and Setters
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

@@ -6,6 +6,7 @@ import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.UUID;
 
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -47,16 +48,17 @@ public class JwtSecurityConfig {
         return httpSecurity
         		
         		// Auth rules
+        		.cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
                     .requestMatchers("/authenticate").permitAll()
                     .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
+                    .requestMatchers(PathRequest.toH2Console()).permitAll()
                     .anyRequest().authenticated())
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.
                     sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
-                .httpBasic(Customizer.withDefaults())
-                //.headers(header -> {header.frameOptions().sameOrigin();})
+                .headers(header -> {header.frameOptions().sameOrigin();})
                 .build();
     }
 

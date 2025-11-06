@@ -52,13 +52,11 @@ public class JwtSecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                     .requestMatchers("/authenticate").permitAll()
                     .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
-                    .requestMatchers(PathRequest.toH2Console()).permitAll()
                     .anyRequest().authenticated())
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.
                     sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
-                .headers(header -> {header.frameOptions().sameOrigin();})
                 .build();
     }
 

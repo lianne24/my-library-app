@@ -31,46 +31,13 @@ bash> docker compose down
 Use these credentials to log in and test the full application flow (frontend + backend + database).
 ---
 ## Architecture Overview
-┌──────────────────────────────────────┐
-│              FRONTEND                │
-│ React + Nginx (port 3000)            │
-│ → Talks to Spring Boot REST API       │
-└──────────────┬───────────────────────┘
-               │  JSON / JWT Auth
-┌──────────────┴───────────────────────┐
-│              BACKEND                 │
-│ Spring Boot 3 + JPA + JWT Security   │
-│ Exposes /users/{username}/books APIs │
-└──────────────┬───────────────────────┘
-               │  JDBC
-┌──────────────┴───────────────────────┐
-│               MySQL                  │
-│ Dockerized DB (port 3306)            │
-│ Persists books & user data           │
-└──────────────────────────────────────┘
 
+<img width="329" height="413" alt="Architecture Overview" src="https://github.com/user-attachments/assets/3843fc4a-c061-4264-95f3-f109211508af" />
 
 ---
 ## Project Structure
 
-my-library-app/
-├── backend-springboot/       # Spring Boot REST API
-│   ├── src/main/java/com/rest/webservices/restfulwebservices/
-│   │   ├── book/             # Entity, repository, service, controller
-│   │   ├── jwt/              # JWT auth configuration
-│   │   ├── authentication/   # Spring Security setup
-│   │   └── RestfulWebServicesApplication.java
-│   ├── Dockerfile
-│   └── pom.xml
-│
-├── frontend-react/           # React frontend (Node + Nginx)
-│   ├── src/                  # Components, context, pages
-│   ├── Dockerfile
-│   └── package.json
-│
-├── docker-compose.yml        # Orchestrates all 3 services
-└── README.md
-
+<img width="569" height="422" alt="Project Structure" src="https://github.com/user-attachments/assets/a6c7f834-5f58-42bd-ac2c-1c175e2cc591" />
 
 ---
 ## Tech Stack
@@ -109,10 +76,5 @@ my-library-app/
 - Deploy to AWS / Azure
 - Integration tests & GitHub Actions CI/CD
 - Dashboard for reading progress
-
----
-## Preview
-
-<img width="1509" height="638" alt="demo_preview" src="https://github.com/user-attachments/assets/5a548224-fc7b-4bd6-8966-fc210cd689df" />
 
 

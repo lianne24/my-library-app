@@ -1,0 +1,46 @@
+# Docker Compose configuration for full-stack library project
+# Includes: MySQL (database) + Spring Boot (backend) + React (frontend)
+
+version: '3.8' # Compose file version
+
+services:
+
+  # MySQL Database Service
+  mysql-db:
+    image: mysql:8.0 # Use the official MySQL 8.0 image from Docker Hub 
+    container_name: mysqlbooks # Custom container name for database
+    restart: always
+    environment:
+      MYSQL_DATABASE: books # Create a database named 'books'
+      MYSQL_USER: books-user # Create a non-root user
+      MYSQL_PASSWORD: bookspassword # Password for the above user
+      MYSQL_ROOT_PASSWORD: bookspassword # Root password for administrative access (should not be the same)
+    ports:
+      - "3306:3306" # Root password for administrative access
+    volumes:
+      - mysql_data:/var/lib/mysql # Persist MySQL data locally
+
+  # Spring Boot Backend Service
+  backend:
+    build: ./backend-springboot # Path to backend Dockerfile
+    container_name: spring-backend # Custom container name for backend
+    ports:
+      - "8080:8080" # Map backend container port 8080 to host port 8080
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/books # Point backend to MySQL container
+      SPRING_DATASOURCE_USERNAME: books-user # DB username (same as in MySQL service)
+      SPRING_DATASOURCE_PASSWORD: bookspassword # DB password
+    depends_on:
+      - mysql-db
+
+  # React Frontend Service
+  frontend:
+    build: ./frontend-react # Path to frontend Dockerfile
+    container_name: react-frontend # Custom container name for frontend
+    ports:
+      - "3000:80" # Serve the React app on host port 3000
+    depends_on:
+      - backend # Ensures backend is available before frontend starts
+
+volumes:
+  mysql_data: # Named volume for persisting MySQL data between container restarts

@@ -30,7 +30,7 @@ bash> docker compose down
 
 Use these credentials to log in and test the full application flow (frontend + backend + database).
 ---
-# Architecture Overview
+## Architecture Overview
 ┌──────────────────────────────────────┐
 │              FRONTEND                │
 │ React + Nginx (port 3000)            │
@@ -50,7 +50,7 @@ Use these credentials to log in and test the full application flow (frontend + b
 └──────────────────────────────────────┘
 
 ---
-# Project Structure
+## Project Structure
 
 my-library-app/
 ├── backend-springboot/       # Spring Boot REST API
@@ -71,7 +71,7 @@ my-library-app/
 └── README.md
 
 ---
-Tech Stack
+## Tech Stack
 
 | Layer        | Technology                                           | Description                |
 | ------------ | ---------------------------------------------------- | -------------------------- |
@@ -81,14 +81,14 @@ Tech Stack
 | DevOps       | Docker, Docker Compose                               | Multi-container deployment |
 
 ---
-Authentication Flow (JWT)
+## Authentication Flow (JWT)
 1 - User logs in → frontend calls /authenticate
 2 - Backend validates credentials and returns a JWT token
 3 - React stores the token and attaches it to all API requests: Authorization: Bearer <token>
 4 - Spring Boot verifies the token before processing requests
 
 ---
-API Endpoints
+## API Endpoints
 
 | Method   | Endpoint                       | Description          |
 | -------- | ------------------------------ | -------------------- |
@@ -100,11 +100,17 @@ API Endpoints
 | `DELETE` | `/users/{username}/books/{id}` | Delete book          |
 
 ---
-Future Enhancements 
+## Future Enhancements 
 
 - Refresh tokens for JWT
 - User registration & roles
 - Deploy to AWS / Azure
 - Integration tests & GitHub Actions CI/CD
 - Dashboard for reading progress
+
+---
+## Preview
+
+<img width="1509" height="638" alt="demo_preview" src="https://github.com/user-attachments/assets/5a548224-fc7b-4bd6-8966-fc210cd689df" />
+
 

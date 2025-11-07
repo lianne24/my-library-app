@@ -59,14 +59,14 @@ Use these credentials to log in and test the full application flow (frontend + b
 ---
 ## API Endpoints
 
-| Method   | Endpoint                       | Description          |
-| -------- | ------------------------------ | -------------------- |
-| `POST`   | `/authenticate`                | Generate JWT token   |
-| `GET`    | `/users/{username}/books`      | Get all books        |
-| `GET`    | `/users/{username}/books/{id}` | Get single book      |
-| `POST`   | `/users/{username}/books`      | Create new book      |
-| `PUT`    | `/users/{username}/books/{id}` | Update existing book |
-| `DELETE` | `/users/{username}/books/{id}` | Delete book          |
+| Method   | Endpoint                       | Description              |
+| -------- | ------------------------------ | ------------------------ |
+| `POST`   | `/authenticate`                | Generate JWT token       |
+| `GET`    | `/users/{username}/books`      | Get all books for a user |
+| `GET`    | `/users/{username}/books/{id}` | Get single book          |
+| `POST`   | `/users/{username}/books`      | Create new book          |
+| `PUT`    | `/users/{username}/books/{id}` | Update existing book     |
+| `DELETE` | `/users/{username}/books/{id}` | Delete book              |
 
 ---
 ## Future Enhancements 

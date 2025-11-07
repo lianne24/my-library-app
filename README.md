@@ -49,6 +49,7 @@ Use these credentials to log in and test the full application flow (frontend + b
 │ Persists books & user data           │
 └──────────────────────────────────────┘
 
+
 ---
 ## Project Structure
 
@@ -69,6 +70,7 @@ my-library-app/
 │
 ├── docker-compose.yml        # Orchestrates all 3 services
 └── README.md
+
 
 ---
 ## Tech Stack

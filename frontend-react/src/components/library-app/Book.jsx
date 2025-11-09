@@ -69,7 +69,7 @@ export default function Book(){
         }
 
         if(id==-1){
-            // Send PUT request to update the book on the backend
+            // Send POST request to add book to the backend
             createBookApi(username, book)
                 .then(response => {
                     navigate('/books') // After saving, go back to the main books list
